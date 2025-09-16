@@ -18,8 +18,8 @@ Click on the animals to play their sounds, learn fun facts, or use keyboard shor
 ## Demo
 
 ![Demo Screenshot](screenshot.jpg)  
+[Watch Demo Video](demo.mp4)
 
-*(Replace with actual screenshot of your soundboard)*
 
 ## Installation / Usage
 
