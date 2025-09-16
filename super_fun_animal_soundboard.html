@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Super Fun Animal Soundboard for Kids 🎉🦁🐶🦄</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Bubblegum+Sans:wght@400&family=Chewy:wght@400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            text-align: center;
+            font-family: 'Fredoka One', cursive;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3, #54a0ff);
+            background-size: 400% 400%;
+            animation: rainbowBG 8s ease infinite;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        @keyframes rainbowBG {
+            0% { background-position: 0% 50%; }
+            25% { background-position: 100% 50%; }
+            50% { background-position: 100% 100%; }
+            75% { background-position: 0% 100%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating elements */
+        .floating-emoji {
+            position: fixed;
+            font-size: 30px;
+            animation: float 15s linear infinite;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        .header-container {
+            background: linear-gradient(135deg, #ff6b6b, #feca57);
+            padding: 20px;
+            border-radius: 0 0 50px 50px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-family: 'Chewy', cursive;
+            color: #fff;
+            text-shadow: 4px 4px 8px #333;
+            font-size: clamp(1.8em, 5vw, 3.5em);
+            margin: 0;
+            animation: titleBounce 2s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes titleBounce {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-10px) scale(1.05); }
+        }
+
+        .fun-subtitle {
+            font-family: 'Bubblegum Sans', cursive;
+            color: #fff;
+            font-size: 1.2em;
+            margin-top: 10px;
+            text-shadow: 2px 2px 4px #333;
+        }
+
+        .controls {
+            margin: 20px auto;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            padding: 0 20px;
+        }
+
+        .control-btn {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 25px;
+            font-size: clamp(0.9em, 2.5vw, 1.2em);
+            font-family: 'Fredoka One', cursive;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #ff6b6b, #feca57);
+            color: white;
+            text-shadow: 1px 1px 2px #333;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .control-btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .control-btn:hover:before {
+            left: 100%;
+        }
+
+        .control-btn:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+        }
+
+        .control-btn:active {
+            transform: translateY(0) scale(0.95);
+        }
+
+        .volume-control {
+            margin: 20px auto;
+            background: rgba(255,255,255,0.9);
+            padding: 15px 25px;
+            border-radius: 25px;
+            display: inline-block;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .volume-slider {
+            width: 200px;
+            height: 10px;
+            border-radius: 5px;
+            background: linear-gradient(to right, #ff6b6b, #feca57);
+            outline: none;
+            margin-left: 10px;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .animal-card {
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            border: 5px solid;
+            border-image: linear-gradient(45deg, #ff6b6b, #4ecdc4, #feca57) 1;
+            border-radius: 25px;
+            padding: 20px;
+            position: relative;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+            overflow: hidden;
+        }
+
+        .animal-card:nth-child(odd) {
+            transform: rotate(-2deg);
+        }
+
+        .animal-card:nth-child(even) {
+            transform: rotate(2deg);
+        }
+
+        .animal-card:hover {
+            transform: rotate(0deg) translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            animation: wiggle 0.5s ease-in-out;
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(0deg) translateY(-10px) scale(1.05); }
+            25% { transform: rotate(2deg) translateY(-10px) scale(1.05); }
+            75% { transform: rotate(-2deg) translateY(-10px) scale(1.05); }
+        }
+
+        .animal-card.playing {
+            animation: dance 1s ease-in-out infinite;
+            background: linear-gradient(135deg, #ff9ff3, #54a0ff);
+            border-image: linear-gradient(45deg, #ff6b6b, #4ecdc4, #feca57, #ff9ff3) 1;
+        }
+
+        @keyframes dance {
+            0%, 100% { transform: rotate(0deg) scale(1.1); }
+            25% { transform: rotate(5deg) scale(1.15); }
+            50% { transform: rotate(0deg) scale(1.1); }
+            75% { transform: rotate(-5deg) scale(1.15); }
+        }
+
+        .animal-image {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+        }
+
+        .animal-card:hover .animal-image {
+            transform: scale(1.1) rotate(5deg);
+            border-color: #ff6b6b;
+            filter: brightness(1.2);
+        }
+
+        .animal-name {
+            margin: 15px 0 10px;
+            font-size: 1.4em;
+            color: #333;
+            font-family: 'Chewy', cursive;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .animal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .animal-btn {
+            background: linear-gradient(135deg, #4ecdc4, #45b7d1);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-family: 'Fredoka One', cursive;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .animal-btn:hover {
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .play-count {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: linear-gradient(135deg, #ff6b6b, #feca57);
+            color: white;
+            font-size: 0.8em;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-weight: bold;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+        }
+
+        .fun-fact {
+            background: rgba(255,255,255,0.9);
+            padding: 10px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            margin-top: 10px;
+            font-family: 'Bubblegum Sans', cursive;
+            color: #555;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #feca57;
+            border-radius: 50%;
+            animation: sparkle 2s infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+            50% { opacity: 1; transform: scale(1) rotate(180deg); }
+        }
+
+        .joke-display {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: linear-gradient(135deg, #ff9ff3, #54a0ff);
+            color: white;
+            padding: 30px;
+            border-radius: 25px;
+            font-size: 1.2em;
+            font-family: 'Bubblegum Sans', cursive;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            z-index: 1000;
+            transition: transform 0.3s ease;
+            max-width: 80%;
+        }
+
+        .joke-display.show {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .sound-wave {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ff6b6b;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: soundWave 1s ease-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes soundWave {
+            0% {
+                width: 20px;
+                height: 20px;
+                opacity: 1;
+            }
+            100% {
+                width: 200px;
+                height: 200px;
+                opacity: 0;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 15px;
+                padding: 15px;
+            }
+            
+            .controls {
+                gap: 10px;
+            }
+            
+            .animal-card {
+                padding: 15px;
+            }
+            
+            .animal-image {
+                height: 100px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .animal-name {
+                font-size: 1.2em;
+            }
+            
+            .control-btn {
+                padding: 12px 18px;
+                font-size: 0.9em;
+            }
+        }
+
+        /* Dark Mode */
+        .dark-mode {
+            background: linear-gradient(45deg, #2c3e50, #3498db, #9b59b6, #e74c3c, #f39c12, #1abc9c);
+        }
+
+        .dark-mode .animal-card {
+            background: linear-gradient(135deg, #34495e, #2c3e50);
+            color: #ecf0f1;
+        }
+
+        .dark-mode .animal-name {
+            color: #ecf0f1;
+        }
+
+        .party-mode {
+            animation: partyColors 0.5s infinite;
+        }
+
+        @keyframes partyColors {
+            0% { filter: hue-rotate(0deg); }
+            25% { filter: hue-rotate(90deg); }
+            50% { filter: hue-rotate(180deg); }
+            75% { filter: hue-rotate(270deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
+        .celebration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            animation: confettiFall 3s linear infinite;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="celebration" id="celebration"></div>
+    
+    <div class="header-container">
+        <h1>🎉 SUPER FUN ANIMAL SOUNDBOARD 🎉</h1>
+        <div class="fun-subtitle">Click, Play, Laugh & Learn! 🎵🐾</div>
+    </div>
+
+    <div class="controls">
+        <button class="control-btn" id="play-all">🎼 Play All Sounds</button>
+        <button class="control-btn" id="surprise-btn">🎲 Surprise Animal</button>
+        <button class="control-btn" id="roar-mode">🦁 Roar Mode</button>
+        <button class="control-btn" id="dance-time">💃 Dance Time</button>
+        <button class="control-btn" id="joke-btn">😂 Tell Joke</button>
+        <button class="control-btn" id="party-mode">🎉 Party Mode</button>
+        <button class="control-btn" id="dark-mode-toggle">🌙 Dark Mode</button>
+        <button class="control-btn" id="stop-all">⏹ Stop All</button>
+    </div>
+
+    <div class="volume-control">
+        🔊 Volume: <input type="range" class="volume-slider" id="volume-slider" min="0" max="1" step="0.1" value="0.7">
+    </div>
+
+    <div class="container" id="animal-container">
+        <!-- Animals will be dynamically inserted here -->
+    </div>
+
+    <div class="joke-display" id="joke-display">
+        <div id="joke-text"></div>
+        <button class="control-btn" style="margin-top: 15px;" onclick="hideJoke()">Close 😊</button>
+    </div>
+
+    <script>
+        const animalData = [
+            {name: "Cow 🐄", sound: "moo", img: "https://images.unsplash.com/photo-1516467508483-a7212febe31a?w=300&h=200&fit=crop", fact: "Cows have best friends and get sad when separated! 💕", joke: "Why don't cows have money? Because farmers milk them dry! 😂"},
+            {name: "Dog 🐶", sound: "woof", img: "https://images.unsplash.com/photo-1552053831-71594a27632d?w=300&h=200&fit=crop", fact: "Dogs can learn over 150 words! Woof! 🎓", joke: "What do you call a sleeping bull dog? A bull-dozer! 😴"},
+            {name: "Cat 🐱", sound: "meow", img: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=300&h=200&fit=crop", fact: "Cats purr at the same frequency as healing! 🎵", joke: "Why don't cats play poker? Too many cheetahs! 🃏"},
+            {name: "Lion 🦁", sound: "roar", img: "https://images.unsplash.com/photo-1546026423-cc4642628d2b?w=300&h=200&fit=crop", fact: "A lion's roar can be heard 5 miles away! 📢", joke: "What do you call a lion who loves to bowl? Strike King! 🎳"},
+            {name: "Sheep 🐑", sound: "baa", img: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=300&h=200&fit=crop", fact: "Sheep have photographic memories! 📸", joke: "What do you call a sheep with no legs? A cloud! ☁️"},
+            {name: "Elephant 🐘", sound: "trumpet", img: "https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=300&h=200&fit=crop", fact: "Elephants are afraid of bees! 🐝", joke: "Why don't elephants use computers? They're afraid of the mouse! 🖱️"},
+            {name: "Horse 🐴", sound: "neigh", img: "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=300&h=200&fit=crop", fact: "Horses can sleep standing up! 😴", joke: "What's a horse's favorite sport? Stable tennis! 🏓"},
+            {name: "Monkey 🐵", sound: "ooh-ahh", img: "https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?w=300&h=200&fit=crop", fact: "Monkeys can learn to use money! 💰", joke: "Why don't monkeys play cards? They're afraid of cheetahs! 🐆"},
+            {name: "Duck 🦆", sound: "quack", img: "https://images.unsplash.com/photo-1518256720443-2e4cd718c7db?w=300&h=200&fit=crop", fact: "Ducks have waterproof feathers! 💧", joke: "What do you call a duck that gets all A's? A wise quacker! 🎓"},
+            {name: "Frog 🐸", sound: "ribbit", img: "https://images.unsplash.com/photo-1459262838948-3e2de6c1ec80?w=300&h=200&fit=crop", fact: "Some frogs can freeze solid and come back to life! ❄️", joke: "What's a frog's favorite drink? Croak-a-cola! 🥤"},
+            {name: "Pig 🐷", sound: "oink", img: "https://images.unsplash.com/photo-1516467508483-a7212febe31a?w=300&h=200&fit=crop", fact: "Pigs are smarter than dogs! 🧠", joke: "Why do pigs make great comedians? They're naturally ham-y! 🎭"},
+            {name: "Chicken 🐓", sound: "cluck", img: "https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?w=300&h=200&fit=crop", fact: "Chickens can remember over 100 faces! 👀", joke: "Why did the chicken join the band? It had the drumsticks! 🥁"}
+        ];
+
+        const jokes = [
+            "Why don't elephants use computers? They're afraid of the mouse! 🐭",
+            "What do you call a sleeping bull? A bulldozer! 😴",
+            "Why don't oysters donate? Because they are shellfish! 🦪",
+            "What do you call a bear with no teeth? A gummy bear! 🐻",
+            "Why don't scientists trust atoms? Because they make up everything! ⚛️"
+        ];
+
+        const container = document.getElementById('animal-container');
+        const volumeSlider = document.getElementById('volume-slider');
+        const audioMap = new Map();
+        const playCounts = new Map();
+        let currentlyPlaying = null;
+        let partyModeActive = false;
+
+        // Sound effect creation
+        function createSoundEffect(type) {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            let oscillator, gainNode;
+
+            const soundMap = {
+                'moo': [200, 300, 0.3],
+                'woof': [400, 600, 0.2],
+                'meow': [300, 800, 0.3],
+                'roar': [100, 200, 0.5],
+                'baa': [250, 350, 0.3],
+                'trumpet': [150, 250, 0.4],
+                'neigh': [300, 500, 0.3],
+                'ooh-ahh': [400, 700, 0.3],
+                'quack': [200, 400, 0.2],
+                'ribbit': [100, 300, 0.3],
+                'oink': [200, 350, 0.3],
+                'cluck': [300, 500, 0.2]
+            };
+
+            const [freq1, freq2, duration] = soundMap[type] || [400, 600, 0.3];
+            
+            oscillator = audioContext.createOscillator();
+            gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.setValueAtTime(freq1, audioContext.currentTime);
+            oscillator.frequency.linearRampToValueAtTime(freq2, audioContext.currentTime + duration);
+            
+            gainNode.gain.setValueAtTime(volumeSlider.value * 0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+            
+            oscillator.start();
+            oscillator.stop(audioContext.currentTime + duration);
+        }
+
+        // Create animal cards
+        animalData.forEach((animal, index) => {
+            const card = document.createElement('div');
+            card.classList.add('animal-card');
+            card.setAttribute('data-name', animal.name);
+
+            card.innerHTML = `
+                <div class="play-count" id="count-${index}">0</div>
+                <img class="animal-image" src="${animal.img}" alt="${animal.name}" />
+                <div class="animal-name">${animal.name}</div>
+                <div class="animal-buttons">
+                    <button class="animal-btn play-btn">🎵 Play</button>
+                    <button class="animal-btn stop-btn">⏹ Stop</button>
+                    <button class="animal-btn fact-btn">💡 Fact</button>
+                </div>
+                <div class="fun-fact" style="display: none;">${animal.fact}</div>
+            `;
+
+            container.appendChild(card);
+            playCounts.set(card, 0);
+
+            // Add sparkles
+            for (let i = 0; i < 3; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.classList.add('sparkle');
+                sparkle.style.top = Math.random() * 80 + '%';
+                sparkle.style.left = Math.random() * 80 + '%';
+                sparkle.style.animationDelay = Math.random() * 2 + 's';
+                card.appendChild(sparkle);
+            }
+
+            const playBtn = card.querySelector('.play-btn');
+            const stopBtn = card.querySelector('.stop-btn');
+            const factBtn = card.querySelector('.fact-btn');
+            const factDiv = card.querySelector('.fun-fact');
+
+            playBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                playAnimal(card, animal);
+            });
+
+            stopBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                stopAnimal(card);
+            });
+
+            factBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                factDiv.style.display = factDiv.style.display === 'none' ? 'block' : 'none';
+                speak(animal.fact);
+            });
+
+            card.addEventListener('click', () => {
+                playAnimal(card, animal);
+            });
+        });
+
+        function playAnimal(card, animal) {
+            // Stop current playing
+            if (currentlyPlaying) {
+                currentlyPlaying.classList.remove('playing');
+            }
+
+            // Play sound effect
+            createSoundEffect(animal.sound);
+            
+            // Visual effects
+            card.classList.add('playing');
+            currentlyPlaying = card;
+
+            // Sound wave effect
+            const soundWave = document.createElement('div');
+            soundWave.classList.add('sound-wave');
+            card.appendChild(soundWave);
+            setTimeout(() => soundWave.remove(), 1000);
+
+            // Update play count
+            const countElem = card.querySelector('.play-count');
+            let count = playCounts.get(card) + 1;
+            playCounts.set(card, count);
+            countElem.textContent = count;
+
+            // Voice greeting
+            speak(`Hello friend! I'm a ${animal.name.replace(/[^\w\s]/g, '')}!`);
+
+            // Stop playing animation after 2 seconds
+            setTimeout(() => {
+                card.classList.remove('playing');
+                if (currentlyPlaying === card) {
+                    currentlyPlaying = null;
+                }
+            }, 2000);
+        }
+
+        function stopAnimal(card) {
+            card.classList.remove('playing');
+            if (currentlyPlaying === card) {
+                currentlyPlaying = null;
+            }
+        }
+
+        function speak(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 1.2;
+                utterance.pitch = 1.2;
+                utterance.volume = volumeSlider.value;
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        // Control buttons
+        document.getElementById('play-all').addEventListener('click', async () => {
+            speak("Let's hear from all our animal friends!");
+            const cards = Array.from(container.children);
+            for (let i = 0; i < cards.length; i++) {
+                playAnimal(cards[i], animalData[i]);
+                await new Promise(resolve => setTimeout(resolve, 800));
+            }
+        });
+
+        document.getElementById('surprise-btn').addEventListener('click', () => {
+            speak("Surprise time!");
+            const cards = Array.from(container.children);
+            const randomCard = cards[Math.floor(Math.random() * cards.length)];
+            const randomAnimal = animalData[Array.from(container.children).indexOf(randomCard)];
+            playAnimal(randomCard, randomAnimal);
+            createConfetti();
+        });
+
+        document.getElementById('roar-mode').addEventListener('click', () => {
+            speak("ROAR MODE ACTIVATED!");
+            const lions = Array.from(container.children).filter(card => 
+                card.getAttribute('data-name').includes('Lion'));
+            lions.forEach(lion => {
+                const animalIndex = Array.from(container.children).indexOf(lion);
+                playAnimal(lion, animalData[animalIndex]);
+            });
+        });
+
+        document.getElementById('dance-time').addEventListener('click', () => {
+            speak("It's dance time! Let's boogie!");
+            document.body.classList.add('party-mode');
+            const cards = Array.from(container.children);
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    playAnimal(card, animalData[index]);
+                }, index * 200);
+            });
+            setTimeout(() => document.body.classList.remove('party-mode'), 5000);
+        });
+
+        document.getElementById('joke-btn').addEventListener('click', () => {
+            const randomJoke = jokes[Math.floor(Math.random() * jokes.length)];
+            showJoke(randomJoke);
+            speak(randomJoke.replace(/[^\w\s]/g, ''));
+        });
+
+        document.getElementById('party-mode').addEventListener('click', () => {
+            partyModeActive = !partyModeActive;
+            if (partyModeActive) {
+                document.body.classList.add('party-mode');
+                speak("PARTY MODE ON! Let's celebrate!");
+                createCelebration();
+            } else {
+                document.body.classList.remove('party-mode');
+                speak("Party mode off. Thanks for dancing!");
+            }
+        });
+
+        document.getElementById('dark-mode-toggle').addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            speak("Switching themes!");
+        });
+
+        document.getElementById('
