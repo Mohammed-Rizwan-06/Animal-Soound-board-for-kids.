@@ -17,7 +17,7 @@ Click on the animals to play their sounds, learn fun facts, or use keyboard shor
 
 ## Demo
 
-![Demo Screenshot](screenshot.png)  
+![Demo Screenshot](screenshot.jpg)  
 
 *(Replace with actual screenshot of your soundboard)*
 
